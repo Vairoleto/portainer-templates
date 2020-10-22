@@ -61,7 +61,55 @@
                     "name": "FQDN_NOTDOT",
                     "label": "Prestashop domain guinado",
                     "description": "Dominio utilizado por el prestashop pero sin puntos EJ: mitienda-com"
-                }
+                },
+				{
+					"name": "MAX_CPU",
+					"label": "Cpu size",
+					"description": "Recursos de CPU asignados al stack",
+					"select": [
+					  {
+					    "text": "tiny",
+				        "value": "0.5",
+						"default": true
+					  },
+					  {
+					    "text": "small",
+				        "value": "1"
+					  },
+					  {
+					    "text": "medium",
+				        "value": "2"
+					  },
+					  {
+					    "text": "large",
+				        "value": "4"
+					  }					  
+					]
+				},
+				{
+					"name": "MAX_RAM",
+					"label": "Ram size",
+					"description": "Recursos de RAM asignados al stack",
+					"select": [
+					  {
+					    "text": "tiny",
+				        "value": "512M",
+						"default": true
+					  },
+					  {
+					    "text": "small",
+				        "value": "1024M"
+					  },
+					  {
+					    "text": "medium",
+				        "value": "2048M"
+					  },
+					  {
+					    "text": "large",
+				        "value": "4096M"
+					  }					  
+					]
+				}				
 			]
 		}
 	  
