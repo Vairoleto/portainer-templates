@@ -36,22 +36,22 @@
 					  }
 					]
 				},
-								{
+				{
 					"name": "PS_DEMO_MODE",
 					"label": "Prestashop demo mode",
 					"description": "Demo mode para prestashop",
 					"select": [
 					  {
 					    "text": "si",
-				            "value": "1",
-					    "default": true
+				        "value": "1",
+						"default": true
 					  },
 					  {
 					    "text": "no",
-				            "value": "0"
-					  },
+				        "value": "0"
+					  }
 					]
-				},
+				}
 			]
 		}
 	  
