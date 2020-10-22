@@ -21,7 +21,7 @@
 					"select": [
 					  {
 					    "text": "mariadb:10.5.6-focal",
-						"value": "mariadb:10.5.6-focal",
+				            "value": "mariadb:10.5.6-focal"
 					  }
 					]
 				},
