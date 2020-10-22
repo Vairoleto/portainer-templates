@@ -17,7 +17,7 @@
 			"env": [{
 					"name": "MYSQL_IMAGE_VERSION",
 					"label": "Mysql version",
-					"description": "Azure Workspace ID"
+					"description": "Azure Workspace ID",
 					"select": [
 					  {
 					    "text": "mariadb:10.5.6-focal",
