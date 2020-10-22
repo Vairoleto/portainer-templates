@@ -1,0 +1,37 @@
+{
+	"version": "2",
+	"templates": [
+		{
+			"type": 2,
+			"title": "Prestashop",
+			"description": "Stack prestashop + MariaDB + sftp server",
+			"categories": [
+				"Ecommerce"
+			],
+			"platform": "linux",
+			"logo": "https://raw.githubusercontent.com/Vairoleto/portainer-templates/master/prestaicon.png",
+			"repository": {
+				"url": "https://github.com/Vairoleto/portainer-templates",
+				"stackfile": "docker-stack.yml"
+			},
+			"env": [{
+					"name": "MYSQL_IMAGE_VERSION",
+					"label": "Mysql version",
+					"description": "Azure Workspace ID"
+					"select": [
+					  {
+					    "text": "mariadb:10.5.6-focal",
+						"value": "mariadb:10.5.6-focal",
+					  }
+					]
+				},
+				{
+					"name": "AZURE_PRIMARY_KEY",
+					"label": "Primary key",
+					"description": "Azure primary key"
+				}
+			]
+		}
+	  
+	]
+}
