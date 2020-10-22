@@ -52,6 +52,16 @@
 					  }
 					]
 				}
+				{
+                    "name": "PS_DOMAIN",
+                    "label": "Prestashop domain",
+                    "description": "Dominio utilizado por el prestashop EJ: mitienda.com"
+                }
+				{
+                    "name": "FQDN_NOTDOT",
+                    "label": "Prestashop domain guinado",
+                    "description": "Dominio utilizado por el prestashop pero sin puntos EJ: mitienda-com"
+                }
 			]
 		}
 	  
