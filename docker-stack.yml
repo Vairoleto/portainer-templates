@@ -1,0 +1,67 @@
+version: '3.6'
+
+services:
+  db:	 	# Esto deberia poder ser igual en todos (falta probarlo)
+    image: ${MYSQL_IMAGE_VERSION}   # Esto deberia ser una variable, pero por ahora con una sola opcion
+    environment:
+      - MYSQL_USER=user							# Si el usuario y password pueden ser aleatorios, sino fijos
+      - MYSQL_DATABASE=database					# valor fijo
+      - MYSQL_PASSWORD=mysqlsecret					# Si el usuario y password pueden ser aleatorios, sino fijos
+      - MYSQL_ROOT_PASSWORD=rootsecret           	# Si el usuario y password pueden ser aleatorios, sino fijos
+    ports:
+      - '3306'								# Si compose nos deja definir rangos de puertos, sino a mano por procom.
+    volumes:
+      - 'db_data:/var/lib/mysql'					# fijo db_data
+  prestashop:										# Revisar si compose permite asignar variables a servicios (fqdn_prestashop)
+    image: ${PS_IMAGE_VERSION}	# Esto deberia ser una variable, pero por ahora con una sola opcion	
+    environment:
+      - PS_DEMO_MODE=${PS_DEMO_MODE} 				# preguntar si quiere modo demo (1=si 0=no)
+      - DB_SERVER=db    							# fijo db						
+      - MARIADB_PORT_NUMBER=3306					# fijo 3306
+      - DB_USER=user								# depende de lo que se resuelva para db	
+      - DB_NAME=database				# depende de lo que se resuelva para db
+      - DB_PASSWD=mysqlsecret						# depende de lo que se resuelva para db
+      - PS_INSTALL_AUTO=1							# fijo 1 
+      - PS_LANGUAGE=es								# fijo es
+      - PS_COUNTRY=AR								# fijo AR 
+      - ADMIN_PASSWD=adminsecret					# Si el usuario y password pueden ser aleatorios, sino fijo	
+      - PS_DOMAIN=${PS_DOMAIN}						# variable fqdn
+    volumes:
+      - 'prestashop_data:/var/www/html'				#fijo prestashop_data
+    depends_on:
+      - db
+    links:
+      - db:db
+    deploy:
+      labels:
+      - "traefik.enable=true" # fijo
+      - "traefik.http.routers.${FQDN_NOTDOT}.rule=Host(`${PS_DOMAIN}`)" # variables fqdn usando guiones y fqdn simple
+      - "traefik.http.routers.${FQDN_NOTDOT}.entrypoints=web" # variable fqdn usando guiones
+      - "traefik.http.services.${FQDN_NOTDOT}.loadbalancer.server.port=80" # variable fqdn usando guiones
+      placement:
+        constraints: [node.role == worker] # fijo worker
+      resources:
+        limits:
+          cpus: ${MAX_CPU}
+          memory: ${MAX_RAM}
+  sftp:
+    image: 'atmoz/sftp:alpine' # fija
+    volumes:
+      - 'prestashop_data:/home/ftp-user/prestashop'  # fijo
+    ports:
+      - '22'	#Si compose nos deja definir rangos de puertos, sino a mano por procom.
+    command: ftp-user:xVycxRRXTAs9JJkZTS48:33   # fijo
+
+volumes:
+  prestashop_data:
+    driver: glusterfs2
+    name: "${FQDN_NOTDOT}_prestashop"
+    driver_opts:
+      volname: gfs
+      subdir: ${FQDN_NOTDOT}_prestashop-data
+  db_data:
+    driver: glusterfs2
+    name: "${FQDN_NOTDOT}_db"
+    driver_opts:
+      volname: gfs
+      subdir: ${FQDN_NOTDOT}_db-data
